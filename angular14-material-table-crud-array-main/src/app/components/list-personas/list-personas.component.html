@@ -1,0 +1,72 @@
+<div *ngIf="!listado" class="container">
+  <div class="izquierda">
+<h2>Personas Listados world</h2>
+<span class="pasion">Pasion por las bases de datos</span>
+<button (click)="entrar()" mat-stroked-button color="primary">Entrar</button>
+  </div>
+<div class="derecha">
+  <img src="../../../assets/images/woman.jpg"  alt="">
+</div>
+</div>
+
+<mat-card *ngIf="listado">
+  <mat-toolbar color="primary">
+    <span>Personas</span>
+  </mat-toolbar>
+    <mat-form-field appearance="standard">
+        <mat-label>Filter</mat-label>
+        <input matInput (keyup)="applyFilter($event)" placeholder="Ex. Mia" #input>
+      </mat-form-field>
+      <button class="agregar" (click)="agregarDialog()" mat-raised-button color="primary">Agregar</button>
+     
+    <table mat-table [dataSource]="dataSource" matSort class="mat-elevation-z8">
+
+        <!--- Note that these columns can be defined in any order.
+              The actual rendered columns are set as a property on the row definition" -->
+      
+        <!-- Position Column -->
+        <ng-container matColumnDef="nombre">
+          <th mat-header-cell *matHeaderCellDef mat-sort-header> Nombre. </th>
+          <td mat-cell *matCellDef="let element"> {{element.nombre}} </td>
+        </ng-container>
+      
+        <!-- Name Column -->
+        <ng-container matColumnDef="apellido">
+          <th mat-header-cell *matHeaderCellDef mat-sort-header> Apellido </th>
+          <td mat-cell *matCellDef="let element"> {{element.apellido}} </td>
+        </ng-container>
+      
+        <!-- Weight Column -->
+        <ng-container matColumnDef="correo">
+          <th mat-header-cell *matHeaderCellDef mat-sort-header>Correo </th>
+          <td mat-cell *matCellDef="let element"> {{element.correo}} </td>
+        </ng-container>
+      
+        <!-- Symbol Column -->
+        <ng-container matColumnDef="tipoDocumento">
+          <th mat-header-cell *matHeaderCellDef mat-sort-header>Tipo document </th>
+          <td mat-cell *matCellDef="let element"> {{element.tipoDocumento}} </td>
+        </ng-container>
+        <ng-container matColumnDef="documento">
+            <th mat-header-cell *matHeaderCellDef mat-sort-header> Documento </th>
+            <td mat-cell *matCellDef="let element"> {{element.documento}} </td>
+          </ng-container>
+          <ng-container matColumnDef="fechaNacimiento">
+            <th mat-header-cell *matHeaderCellDef mat-sort-header>Fecha Nacm. </th>
+            <td mat-cell *matCellDef="let element"> {{element.fechaNacimiento | date:'dd/MM/YYYY'}} </td>
+          </ng-container>
+          <ng-container matColumnDef="Acciones">
+            <th mat-header-cell *matHeaderCellDef mat-sort-header> </th>
+            <td mat-cell *matCellDef="let element"> 
+                <mat-icon (click)="edit(element)" class="btnEdit" style="color:rgb(28, 114, 41);margin-right: 20px;">edit</mat-icon>
+                <mat-icon (click)="delete(element.correo)" class="btnDelete"  style="color:rgb(148, 47, 47)">delete</mat-icon>
+
+            </td>
+          </ng-container>
+      
+        <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+        <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
+      </table>
+      <mat-paginator (page)="mipagina($event)" [pageSizeOptions]="[5, 10, 25, 100]" aria-label="Select page of users"></mat-paginator>
+      
+</mat-card>
